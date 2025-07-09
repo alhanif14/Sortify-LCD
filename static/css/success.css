@@ -1,0 +1,20 @@
+/* Animasi Ceklis Besar */
+@keyframes pulseCheck {
+    0% {
+        transform: scale(3);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(3.5); /* 💥 lebih besar pas pulse */
+        opacity: 1;
+    }
+    100% {
+        transform: scale(3);
+        opacity: 0.7;
+    }
+}
+
+.animate-check {
+    animation: pulseCheck 2s infinite;
+    font-size: 15rem;
+}

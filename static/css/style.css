@@ -1,0 +1,18 @@
+body{
+    background-color: rgb(254, 255, 245) !important;
+    font-family: 'Monserrat', sans-serif !important;
+    width: 1024px;
+    height: 600px;
+    border: solid 1px red;
+}
+
+::selection {
+    background-color: rgb(163, 219, 107);
+    color: rgb(32, 64, 0);
+  }
+
+.material-symbols-rounded {
+    font-size: 40px !important;
+    color: rgb(121, 162, 18); 
+    opacity: 0.8;
+}

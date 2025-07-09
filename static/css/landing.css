@@ -1,0 +1,76 @@
+.landing-title {
+    font-size: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.landing-img-left {
+    width: 180px; 
+    height: auto;
+    position: absolute;
+    left: -150px;
+    top: -50px;
+    z-index: 1; 
+    transform: rotate(-10deg); 
+}
+
+.landing-img-right {
+    width: 180px;
+    height: auto;
+    margin-left: 15px;
+    position: absolute;
+    right: -130px;
+    z-index: -1; 
+    transform: rotate(10deg); 
+    opacity: 0.9;
+}
+
+/* Teks "are greener" */
+.tilted-text {
+    display: inline-block;
+    /* background: black; */
+    background: rgb(94, 121, 26);
+    transform: rotate(-2deg); /* Miring dikit */
+}
+
+.logo{
+    width: 280px;
+}
+
+.how-btn {
+    background-color: rgb(254, 255, 245);
+    color: rgb(121, 162, 18) !important;
+    border: solid 3px rgb(121, 162, 18);
+}
+
+.how-btn:active{
+    background-color: rgb(121, 162, 18);
+    color: white !important;
+    border: solid 3px rgb(254, 255, 245);
+}
+
+.start-btn {
+    background-color: rgb(121, 162, 18);
+    color: white !important;
+    border: solid 3px rgb(254, 255, 245);
+}
+
+.start-btn:active {
+    background-color: rgb(254, 255, 245);
+    color: rgb(121, 162, 18) !important;
+    border: solid 3px rgb(121, 162, 18);
+}
+
+.avail-btn {
+    background-color: rgb(254, 255, 245);
+    color: rgb(121, 162, 18) !important;
+    border: solid 3px rgb(121, 162, 18);
+}
+
+.avail-btn:active{
+    background-color: rgb(121, 162, 18);
+    color: white !important;
+    border: solid 3px rgb(254, 255, 245);
+}

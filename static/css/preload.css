@@ -1,0 +1,62 @@
+.animated-logo {
+    width: 150px;
+    height: auto;
+    animation: spin 3s cubic-bezier(0.25, 0.1, 0.25, 1) infinite, animateLogo 4s ease-in-out infinite;
+    transform-origin: center;
+}
+
+.animated-path {
+    stroke: #19400F;
+    stroke-width: 2;
+    fill: transparent;
+    stroke-dasharray: 4180;
+    stroke-dashoffset: 4180;
+    animation: animateLogo 4s ease-in-out infinite;
+}
+
+.path-1 {
+    stroke: #19400F; 
+}
+
+.path-2 {
+    stroke: #4F6A18; 
+}
+
+.path-3 {
+    stroke: #A1CF9B; 
+}
+
+@keyframes animateLogo {
+    0% {
+        stroke-dashoffset: 4180;
+        fill: transparent;
+    }
+    30% {
+        stroke-dashoffset: 3140;
+        fill: transparent;
+    }
+    50% {
+        stroke-dashoffset: 2090;
+        fill: transparent;
+    }
+    70% {
+        stroke-dashoffset: 1045;
+        fill: transparent;
+    }
+    100% {
+        stroke-dashoffset: 0;
+        fill: #19400F;  /* Warna hijau */
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

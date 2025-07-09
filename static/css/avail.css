@@ -1,0 +1,76 @@
+.progress-box {
+    width: 200px;
+}
+
+.back-link {
+    display: inline-flex; 
+    align-items: center; 
+    gap: 6px;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.back-text{
+    color: #47630b !important;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+
+.icon-large {
+    font-size: 48px;
+    color: #666;
+}
+
+.countup-number {
+    font-size: 32px;
+}
+
+.progress-container {
+    width: 100px;
+    height: 150px;
+    background-color: #f1f1f1;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Progress fill tetap */
+.progress-fill {
+    width: 100%;
+    height: 0%;
+    transition: height 2.5s ease;
+    background-color: grey; /* fallback warna */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1; /* 👉 Fill di bawah icon */
+}
+
+/* Icon di tengah */
+.icon-inside-trash {
+    font-size: 36px;
+    color: #fbfff1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 👉 Tengah beneran */
+    z-index: 2; /* 👉 Icon di atas fill */
+}
+
+
+.progress-label {
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Warna tambahan */
+.bg-success { background-color: #28a745; }
+.bg-primary { background-color: #007bff; }
+.bg-info { background-color: #17a2b8; }
+.bg-warning { background-color: #ffc107; }

@@ -1,0 +1,15 @@
+.start-page-content img {
+    width: 20%;
+    box-shadow: 0 0 20px 5px rgba(0, 255, 0, 0.5); /* ✨ Glow awal */
+    animation: glowPulse 2s infinite alternate; /* 🔥 Animasi nyala-redup */
+}
+
+/* Animasi keyframes */
+@keyframes glowPulse {
+    0% {
+        box-shadow: 0 0 10px 2px rgba(174, 255, 0, 0.4);
+    }
+    100% {
+        box-shadow: 0 0 25px 10px rgba(179, 255, 0, 0.8);
+    }
+}
