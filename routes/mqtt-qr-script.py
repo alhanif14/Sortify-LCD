@@ -4,6 +4,8 @@ from datetime import datetime
 import qrcode
 import os
 import json
+from dotenv import load_dotenv
+load_dotenv()
 
 # Path simpan QR code (relatif ke file ini)
 output_folder = os.path.join(os.path.dirname(__file__), "../static/qr-code")
@@ -11,12 +13,13 @@ output_folder = os.path.abspath(output_folder)
 os.makedirs(output_folder, exist_ok=True)
 
 # Koneksi ke PostgreSQL
-conn = psycopg2.connect(
-    host="localhost",
-    database="sortify_db",
-    user="postgres",
-    password="H140604:)"
-)
+# conn = psycopg2.connect(
+#     host="localhost",
+#     database="sortify_db",
+#     user="postgres",
+#     password="H140604:)"
+# )
+conn = psycopg2.connect(os.getenv("DATABASE_URL"))
 cur = conn.cursor()
 
 detecting = False
