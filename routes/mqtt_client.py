@@ -39,3 +39,8 @@ def reset_last_mqtt_result():
     global _last_mqtt_result
     with _lock:
         _last_mqtt_result = None
+
+def set_last_mqtt_result(value):
+    global _last_mqtt_result
+    with _lock:
+        _last_mqtt_result = value
