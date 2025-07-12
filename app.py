@@ -6,6 +6,7 @@ from routes.avail import avail_routes
 from routes.success import success_routes
 from routes.barcode import barcode_routes
 from routes.preload import preload_routes
+from routes.mqtt_client import set_last_mqtt_result  # ✅ Tambahkan ini
 import uvicorn, threading, os
 from dotenv import load_dotenv
 load_dotenv()
@@ -131,6 +132,7 @@ def run_mqtt_script():
             if detecting:
                 if payload in waste_point_map:
                     detected.append(payload)
+                    set_last_mqtt_result(payload)  # ✅ Set result ke global
                     print(f"🟢 Jenis sampah terdeteksi: {payload}")
                 else:
                     print(f"⚪ Diabaikan: {payload}")
@@ -150,4 +152,3 @@ threading.Thread(target=run_mqtt_script, daemon=True).start()
 # Jalankan app FastHTML
 if __name__ == '__main__':
     uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", 8080)))
-    
