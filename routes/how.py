@@ -44,7 +44,7 @@ def how_content():
               href="/start",
               hx_get="/start",
               hx_target="#mainContent",
-              cls="start-btn m-4 rounded-4 text-decoration-none py-2 px-4 h1"),
+              cls="start-btn m-4 mt-0 rounded-4 text-decoration-none py-1 px-3 h2"),
               cls="d-flex justify-content-end"
         ),
         cls="how-page-content container"
