@@ -44,14 +44,18 @@ def preload_routes(rt):
 
     @rt("/mqtt/result")
     def mqtt_result():
-        result = get_last_mqtt_result()
-        print(f"Checking MQTT result: {result}")
-        if result in ("paper", "plastic", "organic", "other"):
-            reset_last_mqtt_result()
-            return Div(
-    Script('htmx.trigger(document.body, "go-success")')
-)
-        else:
-            return Div("Waiting for result...", cls="text-center text-muted small")
+        # Cek entri terbaru dari tabel waste_detection_log
+        cur.execute("SELECT waste_type FROM waste_detection_log ORDER BY timestamp DESC LIMIT 1")
+        row = cur.fetchone()
+        
+        if row:
+            latest_result = row[0]
+            print(f"🧪 Result from DB: {latest_result}")
+            if any(w in latest_result for w in ("plastic", "paper", "organic", "other")):
+                return Div(
+                    Script('htmx.trigger(document.body, "go-success")')
+                )
+        
+        return Div("Waiting for result...", cls="text-center text-muted small")
 
 
