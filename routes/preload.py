@@ -1,6 +1,11 @@
 from fasthtml.common import *
 from fastcore.xtras import NotStr
 from routes.mqtt_client import get_last_mqtt_result, reset_last_mqtt_result
+from dotenv import load_dotenv
+import psycopg2
+import os
+
+load_dotenv()
 
 def preload_content():
     return Div(
@@ -44,18 +49,22 @@ def preload_routes(rt):
 
     @rt("/mqtt/result")
     def mqtt_result():
-        # Cek entri terbaru dari tabel waste_detection_log
-        cur.execute("SELECT waste_type FROM waste_detection_log ORDER BY timestamp DESC LIMIT 1")
-        row = cur.fetchone()
-        
-        if row:
-            latest_result = row[0]
-            print(f"🧪 Result from DB: {latest_result}")
-            if any(w in latest_result for w in ("plastic", "paper", "organic", "other")):
-                return Div(
-                    Script('htmx.trigger(document.body, "go-success")')
-                )
-        
+        try:
+            conn = psycopg2.connect(os.getenv("DATABASE_URL"))
+            cur = conn.cursor()
+            cur.execute("SELECT waste_type FROM waste_detection_log ORDER BY timestamp DESC LIMIT 1")
+            row = cur.fetchone()
+            cur.close()
+            conn.close()
+            
+            if row:
+                latest_result = row[0]
+                print(f"🧪 DB Result: {latest_result}")
+                if any(w in latest_result for w in ("plastic", "paper", "organic", "other")):
+                    return Div(Script('htmx.trigger(document.body, "go-success")'))
+        except Exception as e:
+            print(f"❌ DB Error: {e}")
+
         return Div("Waiting for result...", cls="text-center text-muted small")
 
 
