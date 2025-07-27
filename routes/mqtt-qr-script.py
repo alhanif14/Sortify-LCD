@@ -4,22 +4,17 @@ from datetime import datetime
 import qrcode
 import os
 import json
-from dotenv import load_dotenv
-load_dotenv()
 
-# Path simpan QR code (relatif ke file ini)
 output_folder = os.path.join(os.path.dirname(__file__), "../static/qr-code")
 output_folder = os.path.abspath(output_folder)
 os.makedirs(output_folder, exist_ok=True)
 
-# Koneksi ke PostgreSQL
-# conn = psycopg2.connect(
-#     host="localhost",
-#     database="sortify_db",
-#     user="postgres",
-#     password="H140604:)"
-# )
-conn = psycopg2.connect("postgresql://postgres:ipDgGZwaXGQgRMTSywrRunGfhbEMYdAe@mainline.proxy.rlwy.net:19927/railway")
+conn = psycopg2.connect(
+    host="localhost",
+    database="sortify_db",
+    user="postgres",
+    password="H140604:)"
+)
 cur = conn.cursor()
 
 detecting = False
@@ -47,7 +42,7 @@ def generate_qr(waste_id, timestamp, waste_list, total_point):
     return filename
 
 def on_connect(client, userdata, flags, rc):
-    print("✅ Connected to MQTT Broker!")
+    print("Connected to MQTT Broker!")
     client.subscribe("waste/raw")
 
 def on_message(client, userdata, msg):
@@ -58,7 +53,7 @@ def on_message(client, userdata, msg):
     if payload == "start":
         detecting = True
         detected_waste_types = []
-        print("🚀 Deteksi dimulai.")
+        print("Detection started.")
 
     elif payload == "stop":
         if detecting:
@@ -83,21 +78,21 @@ def on_message(client, userdata, msg):
                 )
                 conn.commit()
 
-                print(f"✅ Data disimpan | Sampah: {waste_str} | Point: {total_point} | QR: {qr_filename}")
+                print(f"Data saved | waste: {waste_str} | Point: {total_point} | QR: {qr_filename}")
             else:
-                print("⚠️ Tidak ada jenis sampah yang terdeteksi.")
+                print("No waste type detected.")
         else:
-            print("❌ Stop diterima tapi deteksi belum dimulai.")
+            print("Stop received but detection has not started.")
 
     else:
         if detecting:
             if payload in waste_point_map:
                 detected_waste_types.append(payload)
-                print(f"🟢 Jenis sampah terdeteksi: {payload}")
+                print(f"Waste type detected: {payload}")
             else:
-                print(f"⚪ Diabaikan: {payload}")
+                print(f"Ignored: {payload}")
         else:
-            print(f"🔸 Pesan diterima di luar status deteksi: {payload}")
+            print(f"Message received outside detection status: {payload}")
 
 client = mqtt.Client()
 client.on_connect = on_connect

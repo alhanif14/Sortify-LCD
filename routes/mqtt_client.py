@@ -25,10 +25,9 @@ client.on_connect = on_connect
 client.on_message = on_message
 
 client.connect(MQTT_BROKER, MQTT_PORT, MQTT_KEEPALIVE)
-client.loop_start()  # Run MQTT client loop in background
+client.loop_start()
 
 def mqtt_publish(topic: str, message: str):
-    # Gunakan client global untuk publish
     client.publish(topic, message)
 
 def get_last_mqtt_result():
@@ -39,8 +38,3 @@ def reset_last_mqtt_result():
     global _last_mqtt_result
     with _lock:
         _last_mqtt_result = None
-
-def set_last_mqtt_result(value):
-    global _last_mqtt_result
-    with _lock:
-        _last_mqtt_result = value

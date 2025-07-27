@@ -41,8 +41,8 @@ def how_content():
         ),
         Div(
             A("Start!", 
-              href="/start",
-              hx_get="/start",
+              href="/preload",
+              hx_get="/preload",
               hx_target="#mainContent",
               cls="start-btn m-4 mt-0 rounded-4 text-decoration-none py-1 px-3 h2"),
               cls="d-flex justify-content-end"
