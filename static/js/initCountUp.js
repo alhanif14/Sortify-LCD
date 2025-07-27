@@ -1,53 +1,45 @@
 import { CountUp } from "./countUp.min.js";
 
-function startCountUp(id, value) {
-    const options = { startVal: 0, duration: 2.5, useEasing: true, suffix: "%" };
-    const countUp = new CountUp(id + "-number", value, options);
+window.updateAvailability = function(id, value) {
+    const numberElement = document.getElementById(id + "-number");
+    const barElement = document.getElementById(id + "-fill");
 
-    const bar = document.getElementById(id + "-fill");
-    if (bar) {
-        setTimeout(() => {
-            bar.style.height = value + "%";  // Progress naik ke atas
-        }, 100);
+    if (!numberElement || !barElement) {
+        console.error(`Elemen untuk ID ${id} tidak ditemukan.`);
+        return;
     }
+
+    const oldValue = parseInt(numberElement.textContent) || 0;
+
+    const options = { 
+        startVal: oldValue, 
+        duration: 1.5,
+        useEasing: true, 
+        suffix: "%" 
+    };
+    const countUp = new CountUp(numberElement, value, options);
 
     if (!countUp.error) {
         countUp.start();
+        barElement.style.height = value + "%";
     } else {
-        console.error("Error CountUp.js:", countUp.error);
+        console.error("Error pada CountUp.js:", countUp.error);
     }
 }
 
-function checkElementsAndStartCountUp(root = document) {
-    console.log("Checking elements...");
-
+function initialCountUp(root = document) {
+    console.log("Inisialisasi CountUp saat halaman dimuat...");
     const countUpIds = ["count1", "count2", "count3", "count4"];
-    let allElementsExist = true;
-
+    
     countUpIds.forEach(id => {
-        if (!root.querySelector("#" + id + "-number")) {
-            console.error(`Element ${id}-number not found.`);
-            allElementsExist = false;
+        const element = root.querySelector("#" + id + "-number");
+        if (element) {
+            const initialValue = parseInt(element.getAttribute("data-value")) || 0;
+            window.updateAvailability(id, initialValue);
         }
     });
-
-    if (allElementsExist) {
-        countUpIds.forEach(id => {
-            const element = root.querySelector("#" + id + "-number");
-            const value = parseInt(element.getAttribute("data-value"));
-            startCountUp(id, value);
-        });
-    } else {
-        console.error("Some required elements are missing.");
-    }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    checkElementsAndStartCountUp();
-});
+document.addEventListener("DOMContentLoaded", () => initialCountUp());
 
-document.addEventListener("htmx:afterSwap", function () {
-    console.log("HTMX content swapped");
-    checkElementsAndStartCountUp();
-});
-
+document.addEventListener("htmx:afterSwap", () => initialCountUp());
