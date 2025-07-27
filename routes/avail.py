@@ -1,6 +1,5 @@
 from fasthtml.common import *
 
-# Function to create progress bar box
 def progress_box(id_num, label, color_class, icon_name, value):
     return Div(
         Div(

@@ -43,12 +43,12 @@ def landing():
             Link(href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded", rel="stylesheet"),
             Script(type="module", src="/static/js/countUp.min.js"),
             Script(type="module", src="/static/js/initCountUp.js"),
-            Script(src="/static/js/mqtt.js"),
-            # Script(src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"),
-            Script(src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js", onload="startMqtt()"),
+            Script(src="/static/js/paho-mqtt.js", defer=True),
+            Script(src="/static/js/mqtt.js", defer=True),
+            Script(src="/static/js/avail_mqtt.js", defer=True),
             Script("""
  if (!window.Paho || !window.Paho.MQTT) {
-      console.error("Paho MQTT not loaded, waiting for it to load...");
+      console.error("Paho MQTT not loaded");
     } else {
       console.log("Paho MQTT already loaded");
     }

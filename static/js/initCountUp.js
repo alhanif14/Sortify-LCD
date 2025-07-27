@@ -1,45 +1,48 @@
 import { CountUp } from "./countUp.min.js";
 
-window.updateAvailability = function(id, value) {
+window.updateAvailabilityUI = function(id, value) {
     const numberElement = document.getElementById(id + "-number");
-    const barElement = document.getElementById(id + "-fill");
+    if (!numberElement) return;
 
-    if (!numberElement || !barElement) {
-        console.error(`Elemen untuk ID ${id} tidak ditemukan.`);
-        return;
-    }
-
-    const oldValue = parseInt(numberElement.textContent) || 0;
-
-    const options = { 
-        startVal: oldValue, 
+    const startValue = parseInt(numberElement.textContent) || 0;
+    const countUp = new CountUp(numberElement, value, {
+        startVal: startValue,
         duration: 1.5,
-        useEasing: true, 
-        suffix: "%" 
-    };
-    const countUp = new CountUp(numberElement, value, options);
+        suffix: "%"
+    });
+
+    const bar = document.getElementById(id + "-fill");
+    if (bar) {
+        bar.style.transition = 'height 1.5s ease-in-out';
+        bar.style.height = value + "%";
+    }
 
     if (!countUp.error) {
         countUp.start();
-        barElement.style.height = value + "%";
     } else {
-        console.error("Error pada CountUp.js:", countUp.error);
+        console.error(`CountUp Error:`, countUp.error);
     }
 }
 
-function initialCountUp(root = document) {
-    console.log("Inisialisasi CountUp saat halaman dimuat...");
-    const countUpIds = ["count1", "count2", "count3", "count4"];
-    
-    countUpIds.forEach(id => {
-        const element = root.querySelector("#" + id + "-number");
-        if (element) {
+function initializeCounters() {
+    console.log("Initializing counters...");
+    ["count1", "count2", "count3", "count4"].forEach(id => {
+        const element = document.getElementById(id + "-number");
+        if(element) {
             const initialValue = parseInt(element.getAttribute("data-value")) || 0;
-            window.updateAvailability(id, initialValue);
+            window.updateAvailabilityUI(id, initialValue);
         }
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => initialCountUp());
+document.body.addEventListener('htmx:afterSwap', function(event) {
+    if (event.detail.target.querySelector(".avail-page-content")) {
+        initializeCounters();
+    }
+});
 
-document.addEventListener("htmx:afterSwap", () => initialCountUp());
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.querySelector(".avail-page-content")) {
+        initializeCounters();
+    }
+});
