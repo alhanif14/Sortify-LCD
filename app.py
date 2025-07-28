@@ -6,9 +6,15 @@ from routes.avail import avail_routes
 from routes.success import success_routes
 from routes.barcode import barcode_routes
 from routes.preload import preload_routes
+from mqtt-qr-script import start_database_mqtt_listener
 import uvicorn
 
 app, rt = fast_app(live=True, pico=False)
+@app.on_event("startup")
+async def startup_event():
+    print("Web server starting, initializing MQTT database listener...")
+    start_database_mqtt_listener()
+
 landing_routes(rt)
 start_routes(rt)
 how_routes(rt)

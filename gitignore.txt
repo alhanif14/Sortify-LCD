@@ -1,0 +1,37 @@
+# Virtual Environment
+.venv/
+env/
+venv/
+
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables
+.env
+*.env
+
+# VSCode settings
+.vscode/
+
+# macOS & system files
+.DS_Store
+Thumbs.db
+
+# Compiled executable (if any)
+*.exe
+*.dll
+*.so
+
+# Logs
+*.log
+
+# Coverage / test
+.coverage
+htmlcov/
+.cache/
+
+# Static analysis
+.mypy_cache/
+.pytest_cache/

@@ -9,10 +9,9 @@ window.startTimer = function() {
             clearInterval(window.timerInterval);
             document.getElementById("timer").innerHTML = "Time's up!";
             
-            // Redirect ke halaman utama setelah timer habis
             setTimeout(function() {
-                window.location.href = '/';  // Redirect ke halaman utama
-            }, 1000);  // Tunggu 1 detik sebelum redirect
+                window.location.href = '/';
+            }, 1000);
         } else {
             document.getElementById("timer").innerHTML = window.timerValue + "s";
         }
@@ -24,9 +23,8 @@ window.resetTimer = function() {
     window.startTimer();
 };
 
-// 🛟 Pastikan timer berjalan setiap kali halaman baru di-load
 document.body.addEventListener('htmx:afterSettle', function(evt) {
-    if (document.getElementById('timer')) {  // Cek kalau ada timer di halaman
+    if (document.getElementById('timer')) {
         startTimer();
     }
 });

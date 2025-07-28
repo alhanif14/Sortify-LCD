@@ -1,11 +1,11 @@
 function waitForPaho(callback, interval = 100, timeout = 5000) {
   const start = Date.now();
   (function check() {
-    console.log("Cek Paho MQTT...", window.Paho);
+    console.log("Check Paho MQTT...", window.Paho);
     if (window.Paho && window.Paho.Client && window.Paho.Message) {
       callback();
     } else if (Date.now() - start > timeout) {
-      console.error("Timeout: Paho MQTT belum dimuat setelah 5 detik.");
+      console.error("Timeout: Paho MQTT not loaded after 5 seconds.");
     } else {
       setTimeout(check, interval);
     }
@@ -47,7 +47,6 @@ waitForPaho(() => {
     },
   });
 
-  // Event custom untuk load success page
   document.body.addEventListener("go-success", () => {
     console.log("go-success event received");
     const pollDiv = document.getElementById("mqtt-poll");
