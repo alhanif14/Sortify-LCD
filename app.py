@@ -6,7 +6,7 @@ from routes.avail import avail_routes
 from routes.success import success_routes
 from routes.barcode import barcode_routes
 from routes.preload import preload_routes
-from mqtt-qr-script import start_database_mqtt_listener
+from routes.mqtt_qr_handler import start_database_mqtt_listener
 import uvicorn
 
 app, rt = fast_app(live=True, pico=False)
