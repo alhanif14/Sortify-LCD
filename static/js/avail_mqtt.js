@@ -9,7 +9,7 @@ function initializeAvailabilityMQTT() {
     waitForPaho(() => {
         console.log("Paho library ready for MQTT.");
         const client = new window.Paho.Client(
-            "broker.emqx.io", 8083, "/mqtt",
+            "broker.emqx.io", 8084, "/mqtt",
             "avail_client_" + Math.random().toString(16).substr(2, 8)
         );
         window.mqttClient = client;
@@ -30,6 +30,7 @@ function initializeAvailabilityMQTT() {
         };
 
         client.connect({
+            useSSL: true,
             onSuccess: () => {
                 console.log("MQTT Connection Successful for Availability!");
                 for (const topic in topicMap) {

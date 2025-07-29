@@ -15,7 +15,7 @@ function waitForPaho(callback, interval = 100, timeout = 5000) {
 waitForPaho(() => {
   const client = new window.Paho.Client(
     "broker.emqx.io",
-    8083,
+    8084,
     "clientId" + Math.random()
   );
 
@@ -38,12 +38,13 @@ waitForPaho(() => {
   };
 
   client.connect({
+    useSSL: true,
     onSuccess: () => {
       console.log("MQTT connected");
       client.subscribe("waste/raw");
     },
     onFailure: (err) => {
-      console.error("Gagal connect MQTT:", err);
+      console.error("Failed to connect MQTT:", err);
     },
   });
 

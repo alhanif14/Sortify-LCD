@@ -1,6 +1,5 @@
 from fasthtml.common import *
 from fastcore.xtras import NotStr
-from routes.mqtt_client import get_last_mqtt_result, reset_last_mqtt_result
 
 def preload_content():
     return Div(
@@ -23,14 +22,6 @@ def preload_content():
             cls="text-center py-3"
         ),
         P("Please wait a moment...", cls="text-center h3 text-muted mt-5 pt-5"),
-        Div(
-            "",
-            id="mqtt-poll",
-            hx_get="/mqtt/result",
-            hx_trigger="every 2s",
-            hx_target="#mqtt-poll",
-            hx_swap="outerHTML"
-        ),
         cls="container preload-page"
     )
 
@@ -41,17 +32,3 @@ def preload_routes(rt):
     @rt("/preload")
     def preload():
         return preload_section()
-
-    @rt("/mqtt/result")
-    def mqtt_result():
-        result = get_last_mqtt_result()
-        print(f"Checking MQTT result: {result}")
-        if result in ("paper", "plastic", "organic", "other"):
-            reset_last_mqtt_result()
-            return Div(
-    Script('htmx.trigger(document.body, "go-success")')
-)
-        else:
-            return Div("Waiting for result...", cls="text-center text-muted small")
-
-
