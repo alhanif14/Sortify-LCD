@@ -1,5 +1,5 @@
 from fasthtml.common import *
-from routes.mqtt_client import mqtt_publish
+from routes.mqtt_qr_handler import mqtt_publish
 from routes.preload import preload_section
 from routes.barcode import barcode_section
 

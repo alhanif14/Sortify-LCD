@@ -30,6 +30,11 @@ waste_point_map = {
     "other": 10
 }
 
+client = mqtt.Client(client_id=f"db_handler_{os.getpid()}")
+
+def mqtt_publish(topic: str, message: str):
+    client.publish(topic, message)
+
 def get_db_connection():
     conn = psycopg2.connect(DATABASE_URL)
     return conn
@@ -101,7 +106,6 @@ def on_message(client, userdata, msg):
                 print(f"Database Handler: Waste type detected: {payload}")
 
 def start_database_mqtt_listener():
-    client = mqtt.Client(client_id=f"db_handler_{os.getpid()}")
     client.on_connect = on_connect
     client.on_message = on_message
     client.connect(MQTT_BROKER, MQTT_PORT, 60)
