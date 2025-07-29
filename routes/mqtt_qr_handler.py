@@ -24,7 +24,7 @@ detected_waste_types = []
 lock = threading.Lock()
 
 waste_point_map = {
-    "plastic": 40,
+    "recycle": 40,
     "paper": 40,
     "organic": 30,
     "other": 10

@@ -23,7 +23,7 @@ waitForPaho(() => {
     const data = message.payloadString.toLowerCase();
     console.log("MQTT message received:", data);
 
-    if (["paper", "plastic", "organic", "other"].includes(data)) {
+    if (["paper", "recycle", "organic", "other"].includes(data)) {
       console.log("Valid data detected, navigating to /success...");
       const target = document.getElementById("mainContent");
       if (target) {
