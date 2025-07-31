@@ -44,14 +44,21 @@ def barcode_content():
                 P("Scan to Claim Your Points!", cls="display-5 fw-bold text-center"),
                 P("60s", id="timer", cls="display-1 fw-bolder text-success text-center my-3"),
                 P("Scan with your Sortify web before time runs out.", cls="h5 fw-normal text-center"),
-                Div(
-                    A("Extend Timer", href="#", onclick="resetTimer()", cls="..."),
-                    A("Done", href="/", hx_get="/", hx_target="#mainContent", cls="..."),
-                    cls="d-flex justify-content-center pt-4 mt-3"
-                ),
+               Div(
+                        A("Extend Timer",
+                          href="#",
+                          onclick="resetTimer()",
+                          cls="how-btn rounded-4 px-4 py-2 me-3 h3 text-decoration-none"),
+                        A("Done",
+                          href="/",
+                          hx_get="/",
+                          hx_target="#mainContent",
+                          cls="start-btn rounded-4 px-4 py-2 h3 text-decoration-none"),
+                        cls="d-flex justify-content-center pt-4 mt-3"
+                    ),
                 cls="col-lg-5 col-md-6"
             ),
-            cls="row align-items-center justify-content-center gx-5"
+            cls="row align-items-center justify-content-center gx-5 mt-5 pt-5"
         ),
         hx_get=f"/check-qr-status/{dispose_id}",
         hx_trigger="every 2s",
@@ -67,14 +74,23 @@ def barcode_routes(rt):
         time.sleep(2)
         return barcode_section()
     
-    @rt("/check-qr-status/{dispose_id}")
-    def check_qr_status(dispose_id: int):
+    @rt("/check-qr-status/{dispose_id_str}")
+    def check_qr_status(dispose_id_str: str):
+        numeric_id = None
+        try:
+            numeric_id = int(dispose_id_str.split('_')[-1])
+        except (ValueError, IndexError):
+            return Response(status_code=200)
+
+        if numeric_id is None:
+            return Response(status_code=200)
+
         db = get_db_session()
         try:
-            log_entry = db.query(WasteDetectionLog).filter(WasteDetectionLog.id == dispose_id).first()
+            log_entry = db.query(WasteDetectionLog).filter(WasteDetectionLog.id == numeric_id).first()
             
             if log_entry and log_entry.username:
-                print(f"✅ QR {dispose_id} claimed. Redirecting LCD to home.")
+                print(f"QR {numeric_id} claimed. Redirecting LCD to home.")
                 return Response(status_code=200, headers={"HX-Redirect": "/"})
         finally:
             db.close()
