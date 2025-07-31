@@ -62,6 +62,7 @@ def barcode_content():
         ),
         hx_get=f"/check-qr-status/{dispose_id}",
         hx_trigger="every 2s",
+        hx_swap="none",
         cls="container h-100 d-flex align-items-center"
     )
 
