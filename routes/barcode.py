@@ -18,41 +18,38 @@ def barcode_content():
     latest_qr = get_latest_qr_code_filename()
     return Div(
         Div(
-            P("Scan the barcode to claim your points!", cls="h1 fw-bold"),
-            cls="text-center mb-4"
-        ),
-        Div(
             Div(
-                Img(src=f"/static/qr-code/{latest_qr}", alt="Barcode", cls="img-fluid qr-code-image"),
-                cls="border rounded-4 shadow text-center bg-light"
+                Div(
+                    Div(
+                        Img(src=f"/static/qr-code/{latest_qr}", alt="Barcode", cls="img-fluid qr-code-large"),
+                        cls="border rounded-4 shadow bg-light p-3"
+                    ),
+                    cls="col-lg-5 col-md-6 text-center"
+                ),
+
+                Div(
+                    P("Scan to Claim Your Points!", cls="display-5 fw-bold text-center"),
+                    P("60s", id="timer", cls="display-1 fw-bolder text-success text-center my-3"),
+                    P("Scan with your Sortify web before time runs out.", cls="h5 fw-normal text-center"),
+
+                    Div(
+                        A("Extend Timer",
+                          href="#",
+                          onclick="resetTimer()",
+                          cls="how-btn rounded-4 px-4 py-2 me-3 h3 text-decoration-none"),
+                        A("Done",
+                          href="/",
+                          hx_get="/",
+                          hx_target="#mainContent",
+                          cls="start-btn rounded-4 px-4 py-2 h3 text-decoration-none"),
+                        cls="d-flex justify-content-center pt-4 mt-3"
+                    ),
+                    cls="col-lg-5 col-md-6"
+                ),
+                cls="row align-items-center justify-content-center gx-5 mt-5 pt-5"
             ),
-            cls="d-flex justify-content-center mb-4"
-        ),
-        Div(
-            P("60s", id="timer", cls="display-4 fw-bold text-center text-success"),
-            cls="mb-4"
-        ),
-        Div(
-            P("Scan the barcode using your Sortify app to claim your points and redeem exciting rewards.", 
-              cls="h4 text-center mb-4"),
-        ),
-        Div(
-            P("Hurry up! Don't let the time run out or your points will be lost!", 
-              cls="h5 text-center text-success mb-3"),
-        ),
-        Div(
-            A("Extend Timer",
-              href="#",
-              onclick="resetTimer()",
-              cls="how-btn rounded-4 px-4 py-2 me-3 h3 text-decoration-none"),
-            A("Done",
-              href="/",
-              hx_get="/",
-              hx_target="#mainContent",
-              cls="start-btn rounded-4 px-4 py-2 h3 text-decoration-none"),
-            cls="d-flex justify-content-center pt-4 mt-4"
-        ),
-        cls="barcode-page-content container"
+            cls="container h-100 d-flex"
+        )
     )
 
 def barcode_section():

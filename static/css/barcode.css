@@ -1,3 +1,5 @@
-.qr-code-image{
-    width: 150px;
+.qr-code-large {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
 }
