@@ -49,12 +49,12 @@ def barcode_content():
                         "Extend Timer",
                         href="#",
                         onclick="resetTimer()",
-                        cls="how-btn rounded-4 px-4 py-2 me-3 h3 text-decoration-none"
+                        cls="how-btn rounded-4 px-3 py-2 me-3 h3 text-decoration-none"
                     ),
                     A(
                         "Done",
                         href="/",
-                        cls="start-btn rounded-4 px-4 py-2 h3 text-decoration-none"
+                        cls="start-btn rounded-4 px-3 py-2 h3 text-decoration-none"
                     ),
                     cls="d-flex justify-content-center pt-4 mt-3"
                 ),
