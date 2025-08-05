@@ -32,7 +32,7 @@ def avail_content():
             cls="text-start ms-5 mt-2",
         ),
         Div(
-            P("Trash Availibility", cls="h1 fw-bold"),
+            P("Trash Availability", cls="h1 fw-bold"),
             cls="text-center mb-5",
         ),
         Div(

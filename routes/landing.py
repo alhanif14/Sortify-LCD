@@ -32,7 +32,7 @@ def landing_button():
               hx_get="/start",
               hx_target="#mainContent",
               cls="start-btn m-4 rounded-4 text-decoration-none py-2 px-4 h1"),
-            A("Availibility", 
+            A("Availability", 
               href="/avail",
               hx_get="/avail",
               hx_target="#mainContent",
