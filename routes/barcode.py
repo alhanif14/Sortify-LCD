@@ -44,18 +44,20 @@ def barcode_content():
                 P("Scan to Claim Your Points!", cls="display-5 fw-bold text-center"),
                 P("60s", id="timer", cls="display-1 fw-bolder text-success text-center my-3"),
                 P("Scan with your Sortify web before time runs out.", cls="h5 fw-normal text-center"),
-               Div(
-                        A("Extend Timer",
-                          href="#",
-                          onclick="resetTimer()",
-                          cls="how-btn rounded-4 px-4 py-2 me-3 h3 text-decoration-none"),
-                        A("Done",
-                          href="/",
-                          hx_get="/",
-                          hx_target="#mainContent",
-                          cls="start-btn rounded-4 px-4 py-2 h3 text-decoration-none"),
-                        cls="d-flex justify-content-center pt-4 mt-3"
+                Div(
+                    A(
+                        "Extend Timer",
+                        href="#",
+                        onclick="resetTimer()",
+                        cls="how-btn rounded-4 px-4 py-2 me-3 h3 text-decoration-none"
                     ),
+                    A(
+                        "Done",
+                        href="/",
+                        cls="start-btn rounded-4 px-4 py-2 h3 text-decoration-none"
+                    ),
+                    cls="d-flex justify-content-center pt-4 mt-3"
+                ),
                 cls="col-lg-5 col-md-6"
             ),
             cls="row align-items-center justify-content-center gx-5 mt-5 pt-5"
@@ -89,10 +91,12 @@ def barcode_routes(rt):
         db = get_db_session()
         try:
             log_entry = db.query(WasteDetectionLog).filter(WasteDetectionLog.id == numeric_id).first()
-            
             if log_entry and log_entry.username:
                 print(f"QR {numeric_id} claimed. Redirecting LCD to home.")
-                return Response(status_code=200, headers={"HX-Redirect": "/"})
+                return Response(
+                    status_code=200,
+                    headers={"HX-Trigger": "qr-claimed"}
+                )
         finally:
             db.close()
         
