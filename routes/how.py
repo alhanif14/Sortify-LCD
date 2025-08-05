@@ -1,15 +1,14 @@
 from fasthtml.common import *
 
-# Komponen gambar + teks
 def step_item(img_src, title, description):
     return Div(
         Div(
-            Img(src=img_src, cls="img-fluid rounded-circle"),  # 👉 img bulat
+            Img(src=img_src, cls="img-fluid rounded-circle"),
             cls="step-image overflow-hidden rounded-circle d-flex justify-content-center align-items-center shadow"
         ),
         Div(
-            P(title, cls="step-title"),  # 👉 teks besar
-            P(description, cls="step-desc"),  # 👉 teks kecil
+            P(title, cls="step-title"),
+            P(description, cls="step-desc"),
             cls="text-center mt-3"
         ),
         cls="d-flex flex-column align-items-center"
@@ -17,7 +16,6 @@ def step_item(img_src, title, description):
 
 def how_content():
     return Div(
-        # Tombol Back
         Div(
             A(
                 Span("arrow_back_ios", cls="material-symbols-rounded"),
@@ -27,12 +25,10 @@ def how_content():
             ),
             cls="text-start ms-5 mt-2",
         ),
-        # Judul
         Div(
             P("How to use Sortify", cls="h1 fw-bold"),
             cls="text-center mb-5",
         ),
-        # Steps
         Div(
             step_item("/static/how/step1.png", "DISPOSE", "Throw your waste into the Sortify smart bin."),
             step_item("/static/how/step2.png", "SCAN", "Scan the barcode shown on the machine for claiming points."),

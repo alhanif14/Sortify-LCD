@@ -28,8 +28,12 @@ function initializeCounters() {
     console.log("Initializing counters...");
     ["count1", "count2", "count3", "count4"].forEach(id => {
         const element = document.getElementById(id + "-number");
-        if(element) {
-            const initialValue = parseInt(element.getAttribute("data-value")) || 0;
+        if (element) {
+            const savedValue = localStorage.getItem(`avail_${id}`);
+            const initialValue = savedValue !== null
+                ? parseInt(savedValue, 10)
+                : parseInt(element.getAttribute("data-value")) || 0;
+
             window.updateAvailabilityUI(id, initialValue);
         }
     });

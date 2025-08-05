@@ -15,16 +15,20 @@ function initializeAvailabilityMQTT() {
         window.mqttClient = client;
 
         const topicMap = {
-            "waste/sensor1": "count1", "waste/sensor2": "count2",
-            "waste/sensor3": "count3", "waste/sensor4": "count4"
+            "waste/sensor1": "count1",
+            "waste/sensor2": "count2",
+            "waste/sensor3": "count3",
+            "waste/sensor4": "count4"
         };
 
         client.onMessageArrived = function (message) {
             const topic = message.destinationName;
             const value = parseInt(message.payloadString, 10);
             const elementId = topicMap[topic];
-            console.log(`Pesan MQTT diterima: ${topic} -> ${value}`);
+            console.log(`MQTT message received: ${topic} -> ${value}`);
+
             if (elementId && !isNaN(value) && window.updateAvailabilityUI) {
+                localStorage.setItem(`avail_${elementId}`, value);
                 window.updateAvailabilityUI(elementId, value);
             }
         };
