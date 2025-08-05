@@ -1,18 +1,19 @@
-function initializeAvailabilityMQTT() {
-    console.log("Initializing MQTT for Availability page...");
+function initializeGlobalAvailabilityMQTT() {
+    console.log("Initializing Global MQTT for Availability...");
 
-    if (window.mqttClient && window.mqttClient.isConnected()) {
-        console.log("MQTT Connection already established.");
+    if (window.availMqttClient && window.availMqttClient.isConnected()) {
+        console.log("Global MQTT Connection already established.");
         return;
     }
 
     waitForPaho(() => {
         console.log("Paho library ready for MQTT.");
+
         const client = new window.Paho.Client(
             "broker.emqx.io", 8084, "/mqtt",
             "avail_client_" + Math.random().toString(16).substr(2, 8)
         );
-        window.mqttClient = client;
+        window.availMqttClient = client;
 
         const topicMap = {
             "waste/sensor1": "count1",
@@ -25,10 +26,14 @@ function initializeAvailabilityMQTT() {
             const topic = message.destinationName;
             const value = parseInt(message.payloadString, 10);
             const elementId = topicMap[topic];
-            console.log(`MQTT message received: ${topic} -> ${value}`);
 
-            if (elementId && !isNaN(value) && window.updateAvailabilityUI) {
-                localStorage.setItem(`avail_${elementId}`, value);
+            if (!elementId || isNaN(value)) return;
+
+            console.log(`[MQTT] ${topic} -> ${value}`);
+
+            localStorage.setItem(`avail_${elementId}`, value);
+
+            if (document.querySelector(".avail-page-content") && window.updateAvailabilityUI) {
                 window.updateAvailabilityUI(elementId, value);
             }
         };
@@ -36,7 +41,7 @@ function initializeAvailabilityMQTT() {
         client.connect({
             useSSL: true,
             onSuccess: () => {
-                console.log("MQTT Connection Successful for Availability!");
+                console.log("Global MQTT Connection Successful for Availability!");
                 for (const topic in topicMap) {
                     client.subscribe(topic, { qos: 0 });
                 }
@@ -54,16 +59,6 @@ function waitForPaho(callback) {
     }
 }
 
-document.body.addEventListener('htmx:afterSwap', function(event) {
-    if (event.detail.target.querySelector(".avail-page-content")) {
-        console.log("Event htmx:afterSwap detected for Avail page.");
-        initializeAvailabilityMQTT();
-    }
-});
-
 document.addEventListener('DOMContentLoaded', function() {
-    if (document.querySelector(".avail-page-content")) {
-        console.log("Event DOMContentLoaded detected for Avail page.");
-        initializeAvailabilityMQTT();
-    }
+    initializeGlobalAvailabilityMQTT();
 });
