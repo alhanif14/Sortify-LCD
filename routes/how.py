@@ -37,9 +37,9 @@ def how_content(post_url: str = "/mqtt/start"):
         ),
         Div(
             A("Start!", 
-              hx_post=post_url,
-                hx_target="#mainContent",
-                hx_swap="innerHTML",
+              href="/start",
+              hx_get="/start",
+              hx_target="#mainContent",
               cls="start-btn m-4 mt-0 rounded-4 text-decoration-none py-1 px-3 h2"),
               cls="d-flex justify-content-end"
         ),
