@@ -38,7 +38,7 @@ def avail_content():
         Div(
             Div(
                 progress_box("count1", "Organic", "bg-success", "compost", 0),
-                progress_box("count2", "Plactic", "bg-primary", "recycling", 0),
+                progress_box("count2", "Recycle", "bg-primary", "recycling", 0),
                 progress_box("count3", "Paper", "bg-info", "description", 0),
                 progress_box("count4", "Others", "bg-warning", "category", 0),
                 cls="d-flex justify-content-center flex-wrap gap-4"

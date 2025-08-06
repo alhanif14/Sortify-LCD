@@ -14,7 +14,7 @@ def step_item(img_src, title, description):
         cls="d-flex flex-column align-items-center"
     )
 
-def how_content():
+def how_content(post_url: str = "/mqtt/start"):
     return Div(
         Div(
             A(
@@ -37,9 +37,9 @@ def how_content():
         ),
         Div(
             A("Start!", 
-              href="/preload",
-              hx_get="/preload",
-              hx_target="#mainContent",
+              hx_post=post_url,
+                hx_target="#mainContent",
+                hx_swap="innerHTML",
               cls="start-btn m-4 mt-0 rounded-4 text-decoration-none py-1 px-3 h2"),
               cls="d-flex justify-content-end"
         ),
